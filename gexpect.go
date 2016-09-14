@@ -62,6 +62,10 @@ func (buf *buffer) Read(chunk []byte) (int, error) {
 	return fn + nread, err
 }
 
+func (buf *buffer) Write(p []byte) (int, error) {
+	return buf.f.Write(p)
+}
+
 func (buf *buffer) ReadRune() (r rune, size int, err error) {
 	l := buf.b.Len()
 
@@ -345,6 +349,10 @@ func (expect *ExpectSubprocess) Expect(searchString string) (e error) {
 			}
 		}
 	}
+}
+
+func (expect *ExpectSubprocess) Buffer() *buffer {
+	return expect.buf
 }
 
 func (expect *ExpectSubprocess) Send(command string) error {
